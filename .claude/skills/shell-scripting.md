@@ -1,0 +1,1 @@
+../../skills/shell-scripting.md

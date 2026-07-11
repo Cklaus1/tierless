@@ -1,0 +1,1 @@
+../../skills/plan-mode.md

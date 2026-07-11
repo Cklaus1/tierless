@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# project-init — wire the Fable 5 skills into Claude Code for this project
+# Usage: ./scripts/project-init
+#
+# Creates:
+#   .claude/skills/  — symlinks to skills/*.md (excluding README.md)
+#   .claude/plans/   — where compose/plan/deconstruct/verify artifacts are written
+
+set -euo pipefail
+shopt -s nullglob
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+mkdir -p "$ROOT/.claude/skills"
+mkdir -p "$ROOT/.claude/plans"
+
+linked=0
+for skill in "$ROOT/skills/"*.md; do
+  name="$(basename "$skill")"
+  [ "$name" = "README.md" ] && continue
+  if [ ! -e "$ROOT/.claude/skills/$name" ]; then
+    ln -s "../../skills/$name" "$ROOT/.claude/skills/$name"
+    linked=$((linked + 1))
+  fi
+done
+
+# Remove dangling symlinks left behind by renamed/deleted skills
+for link in "$ROOT/.claude/skills/"*; do
+  [ -e "$link" ] || { rm -f "$link"; echo "removed dangling: $(basename "$link")"; }
+done
+
+echo "Fable 5 initialized: $linked new skill link(s), $(ls "$ROOT/.claude/skills" | wc -l) total."
+echo "  .claude/skills/ — skill symlinks"
+echo "  .claude/plans/  — plan artifacts"

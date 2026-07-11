@@ -1,0 +1,86 @@
+# Fable 5 — Discipline Skills for Smaller Models
+
+Fable 5's advantage isn't magic — it's process discipline: decompose before coding, verify
+incrementally, adversarial review, loop-until-dry. Smaller models (Sonnet, Haiku) are faster at
+execution but skip the "think first" steps, leading to more bugs and rework. This project packages
+Fable's implicit discipline as explicit, composable Claude Code skills so smaller models follow the
+same process.
+
+## Why skills over system prompt
+
+- Skills are opt-in per task, so you layer discipline where it matters (architecture, migrations,
+  reviews) and skip it for trivial edits
+- Skills are shareable across sessions — once defined, every session gets the discipline
+- System prompt bloat is real; a 5000-word "be careful" prompt gets ignored at the margins
+
+## Setup
+
+```
+./scripts/project-init
+```
+
+Creates `.claude/skills/` symlinks (so Claude Code discovers the skills) and `.claude/plans/`
+(where skill artifacts — compositions, plans, verification reports — are written).
+
+## The system
+
+The entry point is **fable-discipline** — the router. It classifies each task into a tier
+(trivial / medium / hard / project) and prescribes which skills to layer. For multi-session
+projects, **build-loop** is the outer structure: phased delivery with hard entry/exit gates,
+requiring the discipline pipeline inside each phase.
+
+**Routing & structure:**
+- fable-discipline — THE ENTRY POINT: tier classification, conditional lanes, loop-until-dry
+- build-loop — outer loop for multi-session projects: phased delivery with exit gates
+
+**Core pipeline** (engineering discipline, in order):
+- requirements-elicitation — clarify the ambiguous ask before anything: restate with a done-condition
+- compose — understand before designing: read the code, map architecture, mark assumptions
+- plan-mode — design before building: scope, steps, edge cases, verification, rollback
+- deconstruct — atomic steps (<50 lines), dependency-ordered, each with a pass condition
+- verify — the exit gate: pass conditions, adversarial self-review, regression check
+
+**Specialist disciplines** (same think-first process, applied to other crafts):
+- debugging — hypothesis-driven root-cause hunting; no fix without a demonstrated cause
+- refactoring — behavior-preserving chains of small green-to-green transformations
+- code-archaeology — evidence before assumption in legacy code; Chesterton's Fence enforced
+- api-design — contract-first interfaces; the contract outlives the implementation
+- data-migration — expand/migrate/contract; reversible, rehearsed, verified by counting
+- incident-response — mitigate first, diagnose second, fix third; no novel code under pressure
+- code-migration — ports via strangler pattern: vertical slices, equivalence proven, old path deleted
+- performance-optimization — profile first, one change per measurement, stop at the target number
+- dependency-management — vet, pin, upgrade on cadence; every dependency has an exit plan
+- human-code-review — altitude-first review, blocking/nit labels, critique code not coders
+- version-control — atomic commits with why-messages; history as a debugging tool
+- threat-modeling — design-time security: assets/attackers/boundaries modeled before code exists
+- release-management — versions as contracts, enumerated cuts, flags with removal dates
+- user-docs — reader-task documentation; every instruction executed before shipping
+- tech-doc — design docs as decision instruments: problem before solution, steelmanned alternatives
+- adversarial-review — independent bug hunt over a diff (six attack-vector categories)
+- security-review — vulnerability pass keyed to the surfaces the change actually touches
+- qa-testing — test plans designed from behavior contracts, validated by mutation
+- naming — identifiers that communicate intent; conventions enforced before merge
+
+**Domain disciplines** (the process the model skips in each domain — not knowledge it already has):
+- ai-building — evals before prompts, structured output, failure paths designed as features
+- ai-safety — agentic containment: least privilege by environment, action gates, bounded loops
+- software-architecture — ADRs for hard-to-reverse decisions, boundaries by change-rate
+- database-design — constraints in the DB, queries proven with EXPLAIN at realistic scale
+- systems-programming — invariants first, fault injection, crash-consistency, sanitizers
+- compiler-building — spec before code, staged pipeline, testing as half the work
+- shell-scripting — strict mode, quoting, idempotency, escalate past plumbing
+- infra-ops — everything as code, reversible deploys, observability before incidents
+- cross-platform — differences cataloged, platform code quarantined, all targets tested
+
+**Product & design disciplines:**
+- roadmap — MVP / v1 / v2+ phasing with explicit out-of-scope lists
+- estimation — reference-class sizing: ranges with named risks, never points
+- ui-design — token systems, hierarchy, the five component states, accessibility floor
+- ux-design — flow design before screen design; friction audits and error recovery
+- icp-onboarding — the product's first-run path from signup to the customer's first win
+- onboarding — developer onboarding: zero to first contribution in one session
+
+The key insight: Fable 5's "mental discipline" is really just structured process enforced by
+tooling. A smaller model can match it if the skills force the same steps. The system is composable —
+full pipeline for hard work, deconstruct + verify for medium work, nothing for trivial work.
+`skills/README.md` is the full index.

@@ -1,0 +1,1 @@
+../../skills/threat-modeling.md
