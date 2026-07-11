@@ -90,6 +90,31 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     a bare small model fails. Build tasks to the difficulty where the thesis can actually
     be falsified.
 
+14. **The "harder tasks" attempt failed — and taught us WHERE headroom isn't.** Built four
+    deliberately-hard single-shot tasks (TOCTOU race, multi-bug, second-order injection,
+    migration with 5 hidden traps). Headroom-checked two against bare Haiku before trusting
+    them (dogfooding `verify`): **Haiku aced both** — 5-6/6 on a classic check-then-act race
+    AND a second-order shell-injection/XSS review, unprompted, even finding a bonus vuln I
+    hadn't planted. The lesson isn't "make them more obscure." It's that **single-shot
+    knowledge tasks — spot-the-bug, review-the-code, plan-the-migration — are a ceiling
+    category for a strong small model.** Obscurity just tests trivia recall (which Haiku has
+    deep), not whether discipline helps. Chasing harder gotchas is a dead end.
+
+    **Where headroom actually lives** (the pivot): discipline pays off on dimensions a
+    single response can't capture —
+    - **Multi-step tasks over a long horizon** where a bare model loses the thread, skips a
+      step, or declares done early (this is what `build-loop`/task-07 tests — process, not
+      recall).
+    - **Tasks with NO single right answer** where quality is in coverage/thoroughness
+      (how many real edge cases, how many genuine risks) — gradeable by count, not by a
+      binary tell, and where "the bare model stopped at 3, the disciplined one found 9."
+    - **Tasks where the bare model is CONFIDENTLY WRONG** (not just incomplete) — needs a
+      trap where the plausible answer is affirmatively incorrect, not merely shallow.
+    - **Adversarial/verification tasks** — "here's a solution, find what's wrong with it,"
+      where the disciplined loop-until-dry beats one-pass.
+    The next eval investment is task-07 (build-loop, process-scored) and coverage-graded
+    tasks, NOT more single-shot bug hunts.
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own
