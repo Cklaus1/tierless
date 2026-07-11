@@ -26,7 +26,7 @@ Smaller models regularly over-scope tasks, producing large diffs that hide bugs 
 
 ## How to Apply
 
-When to apply: every Tier 1+ task, per fable-discipline's tier classification:
+When to apply: every Tier 1+ task, per tierless-router's tier classification:
 
 1. Read the relevant source files first. Understand the existing patterns.
 2. Write a deconstruction to `.claude/plans/{task-name}-deconstruct.md`:

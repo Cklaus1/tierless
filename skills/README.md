@@ -1,10 +1,10 @@
-# Fable 5 Skills
+# Tierless Skills
 
-Each `.md` file in this directory (except this index) is a Claude Code skill — a discipline framework that makes smaller models follow the structured process Fable 5 applies implicitly. Symlinks in `.claude/skills/` point here; run `./scripts/project-init` after adding a skill.
+Each `.md` file in this directory (except this index) is a Claude Code skill — a discipline framework that makes a smaller model follow the structured process a frontier model applies implicitly. Symlinks in `.claude/skills/` point here; run `./scripts/project-init` after adding a skill.
 
 ## Routing & Structure
 
-- **fable-discipline** — THE ENTRY POINT. Classifies task weight (tier 0–3) and prescribes which skills to layer; defines loop-until-dry and escalation triggers
+- **tierless-router** — THE ENTRY POINT. Classifies task weight (tier 0–3) and prescribes which skills to layer; defines loop-until-dry and escalation triggers
 - **build-loop** — the outer loop for multi-session projects: phased delivery with entry/exit gates, persisted in `.claude/plans/build-loop.md`
 
 ## Core Pipeline (in order)
@@ -65,7 +65,7 @@ Knowledge the model already has; these encode the *process* it skips in each dom
 
 ## How to Layer Them
 
-Start with fable-discipline; it routes. The short version:
+Start with tierless-router; it routes. The short version:
 
 | Task | Skills |
 |---|---|

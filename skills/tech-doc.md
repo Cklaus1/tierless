@@ -11,7 +11,7 @@ metadata:
 
 Smaller models write tech docs that are long, confident, and hollow: they describe the solution without stating the problem, list one option as if no alternatives existed, and bury the decision the reader needs to make. A great tech doc is not prose about code — it's a decision-making instrument.
 
-**When:** Tier 2 work introducing a new interface, any Tier 3 work, or whenever a design doc/RFC is requested (per fable-discipline's Conditional Lanes).
+**When:** Tier 2 work introducing a new interface, any Tier 3 work, or whenever a design doc/RFC is requested (per tierless-router's Conditional Lanes).
 
 **Where it goes:** shipped designs land in the repo's docs directory; internal working designs go to `.claude/plans/{task-name}-techdoc.md`.
 

@@ -34,7 +34,7 @@ The analysis lives at `.claude/plans/agent-caps/{tool}.md`, one per tool/permiss
 
 ### 2. Tiered actions, human gates where it's irreversible
 
-Classify every action the agent can take (mirror of fable-discipline):
+Classify every action the agent can take (mirror of tierless-router):
 - **Reversible + bounded** (read, draft, compute) → autonomous
 - **Reversible but outward-facing** (send message, post comment) → autonomous with logging and rate limits
 - **Hard to reverse** (delete, deploy, pay, publish, grant access) → human approval, every time, no batch-approve

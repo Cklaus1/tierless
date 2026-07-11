@@ -1,11 +1,11 @@
 ---
-name: fable-discipline
-description: Fable-discipline router — classifies task weight and prescribes which skills to layer; the entry point to the whole system
+name: tierless-router
+description: Tierless router — classifies task weight and prescribes which skills to layer; the entry point to the whole system
 metadata:
   type: user
 ---
 
-# Fable Discipline — The Router Skill
+# Tierless Router — The Router Skill
 
 ## Why
 

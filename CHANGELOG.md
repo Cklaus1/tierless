@@ -13,8 +13,9 @@ All notable changes to this project. Dates are absolute (YYYY-MM-DD).
   OS, Whetstone, Understudy Labs, Caliber, Skillsmith all ship near-identical pitches). Tierless
   came back CLEAR: no company, product, or trademark; only an unrelated academic "tierless
   programming" CS term as minor SEO noise. On-thesis (erase the model tier gap) and domain-viable.
-  - Follow-up tracked: rename the `fable-discipline` router skill and scrub remaining "Fable"
-    references across 41 files (separate verified task — touches every cross-reference).
+- **Renamed the router skill** `fable-discipline` → `tierless-router` and scrubbed remaining "Fable"
+  branding across all skill files, readme, and skills index (21 files touched, references updated,
+  file history preserved via `git mv`).
 
 ### Added
 - **Eval harness** (`eval/`) — the project's first evidence mechanism. Six tell-based
@@ -41,14 +42,14 @@ All notable changes to this project. Dates are absolute (YYYY-MM-DD).
   Conditional Lanes, added the "Which Review?" table, standardized artifact paths and
   verdict vocabulary, fixed the plan-vs-deconstruct boundary, added loop-until-dry to
   verify.md, rewrote naming.md from principles into an enforced pass.
-- **`fable-discipline` router** gained requirements-elicitation as step zero (before
+- **`tierless-router` router** gained requirements-elicitation as step zero (before
   tier classification) and lanes for threat-modeling, release-management, user-docs,
   version-control.
 
 ### Skill count over time
 - Round 1 (initial): 4 skills (compose, plan-mode, deconstruct, verify)
 - Round 2: +5 (roadmap, onboarding, adversarial-review, naming, + router/build-loop)
-- Round 3: fable-discipline router, build-loop, security-review, qa-testing, ui/ux, icp
+- Round 3: tierless-router router, build-loop, security-review, qa-testing, ui/ux, icp
 - Round 4: debugging, refactoring, code-archaeology, api-design, data/code-migration,
   performance, dependency-management, incident-response, tech-doc
 - Round 5: 9 domain skills (ai-building, ai-safety, systems, compiler, architecture,

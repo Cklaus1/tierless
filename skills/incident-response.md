@@ -37,7 +37,7 @@ Keep a running timeline in `.claude/plans/{date}-{slug}-incident.md`: timestampe
 
 ### 5. Afterwards — the calm loop
 - Root-cause via the **debugging** skill (reproduce, hypothesize, prove) — now with no time pressure
-- The real fix routes through the normal pipeline (fable-discipline tier, verify, review) — incident fixes get *more* scrutiny, not less
+- The real fix routes through the normal pipeline (tierless-router tier, verify, review) — incident fixes get *more* scrutiny, not less
 - Blameless postmortem from the timeline: contributing causes (plural — there's never just one), detection gap (could we have known sooner?), and action items with owners
 - Add the regression test and, if detection lagged, the missing alert
 

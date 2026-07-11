@@ -37,13 +37,13 @@ Creates `.claude/skills/` symlinks (so Claude Code discovers the skills) and `.c
 
 ## The system
 
-The entry point is **fable-discipline** — the router. It classifies each task into a tier
+The entry point is **tierless-router** — the router. It classifies each task into a tier
 (trivial / medium / hard / project) and prescribes which skills to layer. For multi-session
 projects, **build-loop** is the outer structure: phased delivery with hard entry/exit gates,
 requiring the discipline pipeline inside each phase.
 
 **Routing & structure:**
-- fable-discipline — THE ENTRY POINT: tier classification, conditional lanes, loop-until-dry
+- tierless-router — THE ENTRY POINT: tier classification, conditional lanes, loop-until-dry
 - build-loop — outer loop for multi-session projects: phased delivery with exit gates
 
 **Core pipeline** (engineering discipline, in order):
@@ -97,9 +97,3 @@ The key insight: a frontier model's "mental discipline" is really just structure
 by tooling. A smaller model can match it if the skills force the same steps. The system is
 composable — full pipeline for hard work, deconstruct + verify for medium work, nothing for trivial
 work. `skills/README.md` is the full index.
-
----
-
-*Note: the router skill is currently filed as `fable-discipline` (a name from the project's origin).
-Renaming it and scrubbing the remaining "Fable" references across 41 files is tracked as a separate
-change — it touches every cross-reference, so it's done as its own verified task rather than inline.*

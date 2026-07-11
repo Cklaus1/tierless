@@ -11,11 +11,11 @@ metadata:
 
 Most code reviews (including self-reviews) confirm that the code works. They don't look for where it breaks. This skill inverts that: the goal is to find bugs, not confirm correctness. If the code survives the review, it's probably good.
 
-This is one of four review skills — they answer different questions (see fable-discipline's "Which Review?" table). Adversarial-review asks *where does this diff break*. Security depth on auth/input/secrets/user-data surfaces belongs to security-review ("who can abuse it"); the social/PR process — labels, altitude, tone — belongs to human-code-review. Don't substitute one for another.
+This is one of four review skills — they answer different questions (see tierless-router's "Which Review?" table). Adversarial-review asks *where does this diff break*. Security depth on auth/input/secrets/user-data surfaces belongs to security-review ("who can abuse it"); the social/PR process — labels, altitude, tone — belongs to human-code-review. Don't substitute one for another.
 
 ## The Rule
 
-**Every Tier 2+ change (per fable-discipline) must undergo an adversarial review.** Review the diff cold, as if authored by someone else — fresh context, no memory of writing it; a separate agent when available. The reviewer's only job is to find problems.
+**Every Tier 2+ change (per tierless-router) must undergo an adversarial review.** Review the diff cold, as if authored by someone else — fresh context, no memory of writing it; a separate agent when available. The reviewer's only job is to find problems.
 
 ## How to Apply
 

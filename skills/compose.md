@@ -24,7 +24,7 @@ Smaller models' most common failure mode is jumping to implementation without fu
 
 ## How to Apply
 
-When to apply: Tier 2+ tasks, per fable-discipline's tier classification. When it applies, run it before any plan or deconstruction:
+When to apply: Tier 2+ tasks, per tierless-router's tier classification. When it applies, run it before any plan or deconstruction:
 
 1. Read all relevant files. Don't guess at file locations — search for imports, grep for function names.
 2. Write the composition to `.claude/plans/{task-name}-compose.md`:
@@ -91,4 +91,4 @@ This turns vague "what if" into actionable tradeoffs.
 
 ## Relationship to Other Skills
 
-Compose is the first step of the Tier 2 pipeline; the full pipeline and tier definitions live in fable-discipline.
+Compose is the first step of the Tier 2 pipeline; the full pipeline and tier definitions live in tierless-router.

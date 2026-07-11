@@ -15,7 +15,7 @@ security-review finds vulnerabilities in a diff — after the design decided whe
 
 **Any Tier 2+ design that crosses a trust boundary gets a threat model before implementation begins — assets, attackers, entry points, and the mitigations that shape the design itself.** Security added at review time is a patch; security decided at design time is architecture.
 
-Fires per fable-discipline's lanes alongside compose: new external interface, new auth/permission surface, new data store holding user data, new third-party integration, or any agentic/AI system (with ai-safety).
+Fires per tierless-router's lanes alongside compose: new external interface, new auth/permission surface, new data store holding user data, new third-party integration, or any agentic/AI system (with ai-safety).
 
 ## How to Apply
 
@@ -44,7 +44,7 @@ The test of a real threat model: it *changed the design*. A threat model that bl
 
 ### 5. Hand off to the pipeline
 
-The threat model's mitigations become plan-mode steps; its boundaries become security-review's target list when the diff arrives (that skill verifies the controls exist; this one decided where they go). Revisit the model when the design changes materially — an escalation trigger, same as fable-discipline's.
+The threat model's mitigations become plan-mode steps; its boundaries become security-review's target list when the diff arrives (that skill verifies the controls exist; this one decided where they go). Revisit the model when the design changes materially — an escalation trigger, same as tierless-router's.
 
 ## Anti-Patterns (gaming behaviors)
 

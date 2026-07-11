@@ -60,4 +60,4 @@ Write `.claude/plans/{area}-dig.md`:
 - Trusting comments over call sites (comments describe the code that used to be there)
 - Deleting dead-looking code without checking dynamic call sites (reflection, string-built routes, cron configs, feature flags)
 - Assuming the tests describe intended behavior (they may enshrine a bug — check the history)
-- Skipping the dig because the change "is only one line" — one line in code you don't fully understand is Tier 2 per fable-discipline
+- Skipping the dig because the change "is only one line" — one line in code you don't fully understand is Tier 2 per tierless-router

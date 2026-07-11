@@ -11,7 +11,7 @@ metadata:
 
 Smaller models name identifiers after implementation mechanics or training-data defaults — `handleData`, `process`, `DataManager` — instead of intent, and they drift conventions file-to-file within a single session: `getUser` in one file, `fetchUser` in the next, a new casing scheme in the third. Bad names are the single biggest source of cognitive load in code; inconsistent ones are worse, because the reader can't even trust the pattern. This skill turns naming from taste into an enforced pass.
 
-Runs as part of verify whenever new or renamed identifiers ship (per fable-discipline's Conditional Lanes). For the mechanics of executing a rename safely, see refactoring.
+Runs as part of verify whenever new or renamed identifiers ship (per tierless-router's Conditional Lanes). For the mechanics of executing a rename safely, see refactoring.
 
 ## The Rule
 

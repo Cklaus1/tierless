@@ -29,6 +29,6 @@ for link in "$ROOT/.claude/skills/"*; do
   [ -e "$link" ] || { rm -f "$link"; echo "removed dangling: $(basename "$link")"; }
 done
 
-echo "Fable 5 initialized: $linked new skill link(s), $(ls "$ROOT/.claude/skills" | wc -l) total."
+echo "Tierless initialized: $linked new skill link(s), $(ls "$ROOT/.claude/skills" | wc -l) total."
 echo "  .claude/skills/ — skill symlinks"
 echo "  .claude/plans/  — plan artifacts"

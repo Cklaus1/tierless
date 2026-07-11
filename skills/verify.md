@@ -25,7 +25,7 @@ Smaller models routinely mark tasks as complete without actually verifying the r
 
 ## How to Apply
 
-When to apply: every Tier 1+ task, per fable-discipline's tier classification. After implementation is complete, before marking the task done:
+When to apply: every Tier 1+ task, per tierless-router's tier classification. After implementation is complete, before marking the task done:
 
 1. Read the plan or deconstruction file.
 2. Run `git diff` and compare against the plan. Note deviations.
@@ -63,7 +63,7 @@ When to apply: every Tier 1+ task, per fable-discipline's tier classification. A
 
 ## Loop-Until-Dry
 
-For Tier 2+, verification is not one pass. After fixing anything the checklist or self-attack found, re-run this whole skill on the fixes. Repeat until a full pass finds **zero new issues** — only then is the task complete. Anything touching auth, payments, or data migration requires two consecutive clean passes (per fable-discipline).
+For Tier 2+, verification is not one pass. After fixing anything the checklist or self-attack found, re-run this whole skill on the fixes. Repeat until a full pass finds **zero new issues** — only then is the task complete. Anything touching auth, payments, or data migration requires two consecutive clean passes (per tierless-router).
 
 ## Regression Check
 
@@ -83,4 +83,4 @@ After verifying the new changes, run the full existing test suite. Verify that:
 
 ## Relationship to Other Skills
 
-Verify answers "did I build what I planned?" — it executes the pass conditions from deconstruct plus the self-attack (3 vectors). It is not the final gate for Tier 2: the independent 6-vector adversarial-review still follows for Tier 2 — see fable-discipline's Which Review? table. The full pipeline lives in fable-discipline.
+Verify answers "did I build what I planned?" — it executes the pass conditions from deconstruct plus the self-attack (3 vectors). It is not the final gate for Tier 2: the independent 6-vector adversarial-review still follows for Tier 2 — see tierless-router's Which Review? table. The full pipeline lives in tierless-router.

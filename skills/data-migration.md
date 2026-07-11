@@ -15,7 +15,7 @@ Code bugs can be reverted; data bugs propagate. A bad deploy is a bad hour — a
 
 **Every migration must be reversible, rehearsed, and verified by counting — before it touches production. No exceptions for "simple" migrations; `UPDATE users SET ...` with a wrong WHERE clause is simple too.**
 
-Always Tier 2+ per fable-discipline; loop-until-dry requires two consecutive clean passes here.
+Always Tier 2+ per tierless-router; loop-until-dry requires two consecutive clean passes here.
 
 Boundary: the dual-write and read-switch code changes route through the normal code pipeline (and code-migration if part of a port).
 

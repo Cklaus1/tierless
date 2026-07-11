@@ -30,7 +30,7 @@ Smaller models tend to jump straight into code: the observable behavior is writi
 
 ## How to Apply
 
-When to apply: Tier 2+ tasks, per fable-discipline's tier classification. For Tier 2, compose precedes this skill — the plan builds on the composition's understanding.
+When to apply: Tier 2+ tasks, per tierless-router's tier classification. For Tier 2, compose precedes this skill — the plan builds on the composition's understanding.
 
 1. Explore the codebase thoroughly first. Read the relevant existing files.
 2. Write the plan to `.claude/plans/{task-name}-plan.md` in the project.

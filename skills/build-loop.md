@@ -23,7 +23,7 @@ roadmap → [for each phase: enter → build → verify → exit] → ship
 
 Each iteration of the loop:
 1. **Enter** — read `build-loop.md`, confirm the previous phase's exit was recorded, state this phase's goal
-2. **Build** — run each task through fable-discipline (tier classification → compose/plan-mode/deconstruct/verify as the tier requires)
+2. **Build** — run each task through tierless-router (tier classification → compose/plan-mode/deconstruct/verify as the tier requires)
 3. **Verify** — run the phase's exit criteria; loop-until-dry
 4. **Exit** — record the exit in `build-loop.md`: what shipped, what was deferred, what surprised you
 

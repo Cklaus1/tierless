@@ -13,7 +13,7 @@ Given "build X", smaller models implement features in encounter-order — whatev
 
 ## The Rule
 
-**Every Tier 3 task (per fable-discipline) gets a roadmap.** The roadmap contains:
+**Every Tier 3 task (per tierless-router) gets a roadmap.** The roadmap contains:
 
 1. **MVP** — the smallest thing that delivers value. Must be shippable in one iteration. Explicitly list what is NOT in the MVP.
 2. **v1** — the first complete release. Builds on MVP with the features that make it production-ready.

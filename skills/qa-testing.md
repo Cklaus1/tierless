@@ -15,7 +15,7 @@ Smaller models write tests that mirror the implementation — they test that the
 
 **Design the test plan from the requirements, before or without reading the implementation.** Then write the tests.
 
-**When:** any Tier 2+ change adding or altering behavior — the test plan lands before deconstruct completes (per fable-discipline lanes).
+**When:** any Tier 2+ change adding or altering behavior — the test plan lands before deconstruct completes (per tierless-router lanes).
 
 **Boundary with verify:** qa-testing designs the suite before/without reading the implementation; verify executes gates after it. Running verify does not satisfy this skill.
 

@@ -37,7 +37,7 @@ Before adding anything non-trivial, answer in writing — one paragraph in the P
 
 - **Scheduled small upgrades** (monthly-ish): patch/minor batches, changelogs skimmed, full test suite as the gate. Many small upgrades are strictly cheaper than one giant one — the 3-years-behind major-version jump is a code-migration project wearing a chore's clothes.
 - **Security patches**: out-of-band, immediately, via automated advisories (Dependabot/Renovate/audit tooling) — this is the one upgrade class that doesn't wait for the cadence. CVE/advisory handling routes through security-review.
-- **Major versions**: each is a mini-project — read the migration guide *before* starting, route through fable-discipline tiering, upgrade one major thing per PR
+- **Major versions**: each is a mini-project — read the migration guide *before* starting, route through tierless-router tiering, upgrade one major thing per PR
 - Never upgrade + refactor + feature in one change (same separation law as refactoring)
 
 ### 4. Prune

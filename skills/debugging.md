@@ -31,7 +31,7 @@ The hypothesis log lives in `.claude/plans/{task-name}-debug.md` — hypotheses 
 3. **Test by observation, not mutation.** Read the code path, add a log line, inspect state at the boundary. The only code changes allowed during diagnosis are observability changes — and they get removed after.
 4. **Bisect when lost.** No hypothesis? Halve the search space: git bisect across commits, binary-search the input, disable half the pipeline. Each halving is cheap; guessing is not.
 5. **Fix the root, prove it, then re-run the reproduction** — and the surrounding tests. The reproduction becomes a regression test where feasible.
-6. **Write the one-liner**: `Root cause: {Z}. Fix: {change}. Regression test: {test}`. If you can't fill in Z precisely, you patched a symptom. The fix is its own task — classify its tier via fable-discipline.
+6. **Write the one-liner**: `Root cause: {Z}. Fix: {change}. Regression test: {test}`. If you can't fill in Z precisely, you patched a symptom. The fix is its own task — classify its tier via tierless-router.
 
 ## Evidence Standards
 

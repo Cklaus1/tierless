@@ -15,7 +15,7 @@ Adversarial-review asks "where does it break"; this skill asks "who can abuse it
 
 ## The Rule
 
-**Any change touching input handling, auth, secrets, file/network access, or user data gets a security pass before it ships.** The pass reviews only the categories the change actually touches — depth over breadth. This skill fires per fable-discipline's Conditional Lanes (auth, input handling, secrets, user data) — not by its own judgment of whether the change "feels" security-relevant.
+**Any change touching input handling, auth, secrets, file/network access, or user data gets a security pass before it ships.** The pass reviews only the categories the change actually touches — depth over breadth. This skill fires per tierless-router's Conditional Lanes (auth, input handling, secrets, user data) — not by its own judgment of whether the change "feels" security-relevant.
 
 ## How to Apply
 
