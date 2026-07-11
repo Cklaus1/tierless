@@ -4,13 +4,13 @@ cache/
 __pycache__/
 
 # Eval: stray files written by arm agents during a grid run (not harness inputs).
-# Legit harness files per task are exactly: task.md, tells.md, skills.md, rubric.md, context/.
-# Legit hand-graded results live in eval/results/ (kept). Everything below is arm cruft.
+# Robust approach: ignore ALL loose .md directly in a task dir, then un-ignore the
+# exactly-4 known harness files. Arm deliverables (scope.md, plan.md, whatever they
+# name it) are caught generically; harness inputs are explicitly kept.
 eval/**/.claude/
 eval/tasks/*/results/
-eval/tasks/*/mvp-scope.md
-eval/tasks/*/migration-plan.md
-eval/tasks/*/plan.md
-eval/tasks/*/*-plan.md
-eval/tasks/*/response.md
-eval/tasks/*/solution*.md
+eval/tasks/*/*.md
+!eval/tasks/*/task.md
+!eval/tasks/*/tells.md
+!eval/tasks/*/skills.md
+!eval/tasks/*/rubric.md

@@ -70,6 +70,26 @@ the next person (or agent) who works on it — and updated as evidence accumulat
    tells or skills. Reproducible with one re-invoke. Hand-running three arms for the POC
    was useful once to prove the machinery; past that, automate.
 
+12. **Never let the model compute the score.** The v2 grid's first grade pass had graders
+    return a `rate` field — and they returned garbage: raw sums (6 instead of 1.0),
+    impossible values (1.75, un-producible from HIT/PARTIAL/MISS). Mixing normalized and
+    un-normalized rates makes every aggregate meaningless. **FIXED:** removed `rate` from
+    the grader schema entirely; the model returns only per-tell verdicts (HIT/PARTIAL/
+    MISS), and the *harness* computes the rate deterministically in JS. Lesson: an LLM
+    grader's job is the judgment (did this tell hit?), never the arithmetic. Structure the
+    output so the math happens in code. Corollary win: because the verdicts were
+    structured and preserved in the journal, the bad run was salvageable by re-grading
+    from cache — no need to re-run the 108 expensive arms.
+
+13. **Near-ceiling tasks can't prove anything.** The clean v2 grid put every arm at
+    0.85–1.0 on 5 of 6 tasks — a modern small model already does clarifying questions,
+    expand/migrate/contract, IDOR-catching unprompted. When everyone's near ceiling, tiny
+    grading noise flips the ranking, and "cheap+skills ≥ frontier" becomes an artifact of
+    task-easiness, not evidence. The bottleneck for validating the product claim is NOT
+    more runs (N=3 already killed single-run inversions) — it's HARDER TASKS with headroom
+    a bare small model fails. Build tasks to the difficulty where the thesis can actually
+    be falsified.
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own
