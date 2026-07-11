@@ -1,20 +1,28 @@
-# Fable 5 Eval Harness
+# Tierless Eval Harness
 
-The project's core claim is: **the discipline skills make a smaller model perform closer to Fable 5 on real coding work.** This harness exists to prove or disprove that claim with data instead of faith. It is the project dogfooding its own `qa-testing` and `ai-building` skills — both of which say "no feature ships without an eval."
+The project's core claim is: **the discipline skills make a cheaper model perform closer to a frontier model on real coding work — closing the tier gap.** This harness exists to prove or disprove that claim with data instead of faith. It is the project dogfooding its own `qa-testing` and `ai-building` skills — both of which say "no feature ships without an eval."
 
 ## The design principle: objective tells
 
 You cannot grade LLM coding output on "quality" — it's a vibe, and every arm produces plausible-looking work. So every task here is built around one or more **tells**: a specific, checkable thing that *only the disciplined process catches*. The bug task has one actual root cause; a shotgun fix changes the wrong line. The ambiguous-ask task has a hidden interpretation fork; the disciplined arm asks about it, the bare arm guesses. Grading a tell is binary — hit or miss — which is what makes the numbers trustworthy.
 
-## The three arms
+## The grid: model × skills (v2)
 
-Each task is run three ways:
+The first version baked the model into the arm (Haiku-bare / Haiku-skills / Opus-bare), which could only answer "does Haiku+skills reach Opus?" — not the questions that drive a deployment decision. v2 makes **model and skill-state independent dimensions**:
 
-- **A — bare-small**: a smaller model (e.g. Haiku/Sonnet-class), no skills, just the task
-- **B — skills-small**: the same smaller model, with the relevant skill files provided and instructed to follow them
-- **C — reference**: the strongest model available (Fable 5 / Opus-class), no skills — the target bar
+- **Models (the ladder):** Haiku (cheap), Sonnet (mid), Opus (frontier)
+- **Skill-state:** bare (task only) vs skills (relevant skill files provided, instructed to follow)
+- **Tasks:** the 6 (soon 7) tell-based tasks
+- **Runs:** N=3 per cell for a spread (single runs inverted results *twice* in v1 — never trust N=1)
 
-The claim is validated if **B closes a meaningful fraction of the A→C gap** on tell-hit rate. If B ≈ A, the skills are decoration. If B ≈ C, they're doing exactly what we promised.
+Grid = 3 models × 2 states × 6 tasks × 3 runs = **108 arm-runs + 108 blind graders**. Each cell records `(model, skills?, task, run) → tell-hit rate`.
+
+### The questions this grid answers (that the old arms couldn't)
+
+1. **Per-model skill lift:** `skills − bare` for each model. Does discipline help Haiku more than Opus (the "cheap models have more to gain" hypothesis)?
+2. **Does the frontier model benefit too,** or is the skill effect only at the bottom of the ladder?
+3. **The money question:** what is the *cheapest model + skills* whose score matches a *pricier model bare*? If Haiku+skills ≈ Sonnet-bare or Opus-bare, that number **is** the product — quantified.
+4. **Where skills backfire:** any cell where `skills < bare` (v1 found one on task 03). Tunnel-vision risk, per-model.
 
 ## Structure
 

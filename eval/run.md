@@ -1,48 +1,55 @@
 # Running the Eval
 
-## Arms
+## The grid (v2)
 
-| Arm | Model | Skills provided |
-|---|---|---|
-| A — bare-small | smaller model (Haiku / Sonnet-class) | none |
-| B — skills-small | SAME smaller model as A | the skill files named in the task's `skills.md` |
-| C — reference | strongest available (Fable 5 / Opus-class) | none |
+Model and skill-state are independent dimensions (see README.md):
 
-Keep A and B on the identical model — the whole experiment is "what do the skills add,"
-so the model must be the only-held variable between them. C uses the strong model to
-set the bar the skills are trying to reach.
+- **Models:** haiku, sonnet, opus (the ladder)
+- **States:** `bare` (task only) / `skills` (task + the skill files named in `skills.md`)
+- **Tasks:** the tell-based tasks under `tasks/`
+- **Runs:** N≥3 per cell (single runs are untrustworthy — v1 inverted twice)
 
-## Procedure per task
+Run it with the `tierless-eval-grid` workflow: it fans out every (model × state × task × run)
+cell in a pipeline (arm → blind grader) and returns per-cell tell-hit rates. `tierless-eval-matrix`
+is the older 3-arm workflow, kept for reference.
 
-1. **Arm A**: new session/context. Paste `task.md` (and any `context/` files). Nothing
-   else. Save the full response to `results/{task}-A.md`.
-2. **Arm B**: new session/context. Paste the full text of each skill file named in
-   `skills.md`, then: "Follow the discipline in these skills for the following task."
-   Then `task.md` + context. Save to `results/{task}-B.md`.
-3. **Arm C**: new session/context. Same as A (task only, no skills), strong model.
-   Save to `results/{task}-C.md`.
+## Fixture isolation — READ THIS (the v1 corruption bug)
 
-Never show any arm the `tells.md` — it's the answer key.
+Some tasks reference code under `tasks/NN/context/` (e.g. `cart.py`, `routes.py`). Some tasks ask
+the model to *change or build* code (01 fix-the-bug, 07 build-the-app). Naively, a mutating arm
+edits the shared `context/` file in place — and with N arms running that task concurrently, they
+clobber the fixture other arms are still reading. In v1 this corrupted task 01 mid-run.
+
+**The fix is a convention, not a copy: fixtures are READ-ONLY reference; the solution lives in the
+response, never on disk.** The grader scores the arm's *response text* (the tells quote the model's
+output), so no arm ever needs to write a file. Two enforcement layers:
+
+1. **Fixture guard header** — every mutable fixture file starts with a comment:
+   `DO NOT EDIT — eval fixture. Put your solution in your response, not in this file.`
+   This stops a "helpful" agent (or a linter) from silently fixing the planted bug.
+2. **Arm-prompt convention** — mutating-task prompts say: "Do not modify any files. Provide the
+   corrected code / the built code in your response." The grid workflow's arm prompts already
+   forbid reading outside the task dir; they also must forbid *writing*.
+
+If a task genuinely needs on-disk mutation (rare), the arm must run against a **per-arm copy** of
+`context/` (a temp dir, or `isolation: 'worktree'` in the workflow), never the shared fixture.
+
+**Guard integrity:** before any grid run, verify the fixtures are pristine —
+`git status --short eval/tasks/*/context/` must be empty. A dirty fixture means a prior run corrupted
+it; restore with `git checkout eval/tasks/`.
 
 ## Fair-play rules
 
-- Identical task text and context across all three arms. Only the model (A/B vs C) and
-  the skills (B vs A/C) vary.
-- Fresh context per arm — no bleed from a previous arm's answer.
-- For ≥3 runs per arm (recommended once the harness proves out), vary nothing but the
-  run; report mean and spread.
+- Identical task text and context across all cells. Only `model` and `state` vary.
+- Fresh context per arm — no bleed between cells.
+- Blind grading: the grader never sees the model, the skill-state, or `tells.md`-as-answers for the
+  arm (it reads tells.md as the key, but scores the response cold, unlabeled).
+- Never show any arm `tells.md`.
 
-## Grading
+## Grading & roll-up
 
-Open `results/{task}-{arm}.md` and `tells.md` side by side. Fill a copy of
-`results/template.md` per (task, arm). Score each tell per `rubric.md`. Roll the
-task-hit-rates into `results/SCORES.md`.
-
-## Automating later
-
-This is written for a human (or an agent) driving it by hand — deliberately, so the
-first pass is scrutable. Once the tells prove stable, the three arms and the grader
-can each be an `agent()` call in a Workflow: fan out A/B/C per task in parallel, then a
-grader agent scores each output against tells.md with a structured verdict. Keep the
-human in the loop for grader spot-checks until the automated grader agrees with a human
-grader on a full task.
+Each cell → `(model, state, task, run, rate)`. Aggregate in `results/SCORES.md`:
+- Per (model, state): mean tell-hit rate across tasks/runs
+- **Skill lift** per model: `mean(skills) − mean(bare)`
+- **The money number:** the cheapest model whose `skills` mean ≥ a pricier model's `bare` mean
+- Flag any cell where `skills < bare` (backfire), per the v1 task-03 finding

@@ -48,14 +48,22 @@ the next person (or agent) who works on it — and updated as evidence accumulat
 
 7. **Eval fixtures are load-bearing and get "helpfully" corrupted.** Task 01's buggy
    `cart.py` was auto-fixed mid-run (a linter/agent saw a bug and repaired it) — which
-   deletes the very thing the task tests. Fixtures that intentionally contain bugs,
-   vulns, or bad code need a guard (a header comment "DO NOT FIX — eval fixture", and
-   ideally read-only perms during a run).
+   deletes the very thing the task tests. **FIXED:** `eval/scripts/guard-fixtures.sh`
+   prepends a neutral `# READ-ONLY eval fixture — do not modify` header to every fixture.
+   Neutral wording is deliberate — the arm agents *read* these files, so the guard must
+   forbid editing without revealing what's planted (a "contains a planted bug" header
+   would spoil the task). Run it only when no grid is in flight.
 
-8. **File-mutating tasks need per-arm isolation.** Tasks that say "fix the bug" or "build
-   the app" have the arm agent editing a shared path — arm B corrupts the fixture arm C
-   then reads. Read-only tasks (review, plan, scope) are safe. Fix: copy each task's
-   `context/` into a per-arm temp dir, or run mutating arms in worktrees.
+8. **File-mutating tasks need per-arm isolation — but the deeper fix was realizing they
+   don't need to mutate at all.** Tasks like "fix the bug" / "build the app" had the arm
+   editing a shared `context/` path, corrupting it for concurrent arms. The insight:
+   **the grader scores the arm's RESPONSE TEXT, not files on disk** (tells quote the
+   model's output), so no arm ever needed to write a file — the disk-mutation was
+   incidental over-helpfulness. **FIXED** at the source: the grid workflow's arm prompts
+   now say "context/ files are READ-ONLY; put your entire solution in your text
+   response, do not modify/create/delete any files." No per-arm copying needed for these
+   tasks. (If a task ever genuinely needs on-disk mutation, use a per-arm temp copy or
+   `isolation: 'worktree'` — documented in run.md.)
 
 9. **Build the eval as a workflow, not by hand.** 36 agents (18 arms + 18 blind graders)
    ran deterministically in parallel, arms label-stripped and forbidden from reading the

@@ -58,10 +58,18 @@ All notable changes to this project. Dates are absolute (YYYY-MM-DD).
   release-management, threat-modeling)
 - **Current: 36 skills**, all wired and audited.
 
+### Fixed
+- **Eval fixture-corruption bug** (LESSONS #7, #8) — file-mutating tasks had arms editing
+  shared `context/` fixtures in place, corrupting them for concurrent arms. Fixed at the
+  source: grid arm-prompts now forbid file writes ("context/ is read-only; solution goes
+  in your response"), since the grader scores response text, not disk. Added
+  `eval/scripts/guard-fixtures.sh` (neutral, no-spoiler DO-NOT-EDIT headers) and a
+  fixture-isolation section in `run.md`. Guard applied to fixtures after the in-flight
+  grid completes.
+
 ### Known issues
-- Eval is single-run per cell — directional, not conclusive. Needs N≥3.
-- File-mutating eval tasks (01, 07) can corrupt shared fixtures when the arm agent edits
-  in place; needs per-arm isolation (worktree or copied context).
+- Eval single-run→ upgraded: the v2 grid (`tierless-eval-grid`) runs N=3 per cell across
+  a full model×skills ladder. First grid run in flight.
 - Task 07 (build-loop) designed but not yet executed.
-- Core claim ("skills close the small→large gap") NOT yet validated at significance;
-  one clean mechanism shown (task 01), one backfire found (task 03).
+- Core claim ("skills close the cheap→frontier gap") NOT yet validated at significance;
+  v1 showed one clean mechanism (task 01) and one backfire (task 03).
