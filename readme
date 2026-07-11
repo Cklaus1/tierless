@@ -1,10 +1,23 @@
-# Fable 5 — Discipline Skills for Smaller Models
+# Tierless
 
-Fable 5's advantage isn't magic — it's process discipline: decompose before coding, verify
-incrementally, adversarial review, loop-until-dry. Smaller models (Sonnet, Haiku) are faster at
-execution but skip the "think first" steps, leading to more bugs and rework. This project packages
-Fable's implicit discipline as explicit, composable Claude Code skills so smaller models follow the
-same process.
+**Make a cheaper model perform a tier above its size.** Tierless is a library of composable
+discipline skills for AI coding agents (Claude Code, Cursor, Codex). A frontier model's advantage
+isn't raw intelligence — it's process discipline: decompose before coding, verify incrementally,
+adversarial review, loop-until-dry. Smaller, cheaper models are fast at execution but skip the
+"think first" steps, so they ship more bugs and rework. Tierless packages that implicit discipline
+as explicit, opt-in skills, so a smaller model follows the same process — and closes the tier gap.
+
+The name says the goal: no tiers. The cheap model and the frontier model produce work of the same
+caliber, because the caliber lives in the process, not the weights.
+
+## Does it actually work?
+
+We measure it — see `eval/`. The harness runs each task three ways (cheap model bare / cheap model
++ skills / frontier model bare) and grades against objective "tells." First results
+(`eval/results/SCORES.md`) are honest and mixed: one clean win where a skill closed the gap to the
+frontier model, one case where a skill backfired, and several tasks where a modern cheap model is
+already strong enough that the skills add little. Validation is ongoing, not assumed — that
+measured-honesty is itself the differentiator in a crowded space.
 
 ## Why skills over system prompt
 
@@ -80,7 +93,13 @@ requiring the discipline pipeline inside each phase.
 - icp-onboarding — the product's first-run path from signup to the customer's first win
 - onboarding — developer onboarding: zero to first contribution in one session
 
-The key insight: Fable 5's "mental discipline" is really just structured process enforced by
-tooling. A smaller model can match it if the skills force the same steps. The system is composable —
-full pipeline for hard work, deconstruct + verify for medium work, nothing for trivial work.
-`skills/README.md` is the full index.
+The key insight: a frontier model's "mental discipline" is really just structured process enforced
+by tooling. A smaller model can match it if the skills force the same steps. The system is
+composable — full pipeline for hard work, deconstruct + verify for medium work, nothing for trivial
+work. `skills/README.md` is the full index.
+
+---
+
+*Note: the router skill is currently filed as `fable-discipline` (a name from the project's origin).
+Renaming it and scrubbing the remaining "Fable" references across 41 files is tracked as a separate
+change — it touches every cross-reference, so it's done as its own verified task rather than inline.*

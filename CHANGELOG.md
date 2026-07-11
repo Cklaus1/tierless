@@ -4,6 +4,18 @@ All notable changes to this project. Dates are absolute (YYYY-MM-DD).
 
 ## [Unreleased]
 
+### Named
+- **Project named "Tierless"** (2026-07-11) — "make a cheaper model perform a tier above its size."
+  Chosen after collision-checking 34 candidate names across the AI-dev-tool namespace (two batched
+  15-name workflow runs plus targeted checks). Nearly every self-evident name — Sensei, Prodigy,
+  Understudy, Boost, TierUp, LevelUp, SkillForge, Skillstack — was already taken by a direct
+  competitor in the "discipline skills for coding agents" space, which is confirmed crowded (Boost
+  OS, Whetstone, Understudy Labs, Caliber, Skillsmith all ship near-identical pitches). Tierless
+  came back CLEAR: no company, product, or trademark; only an unrelated academic "tierless
+  programming" CS term as minor SEO noise. On-thesis (erase the model tier gap) and domain-viable.
+  - Follow-up tracked: rename the `fable-discipline` router skill and scrub remaining "Fable"
+    references across 41 files (separate verified task — touches every cross-reference).
+
 ### Added
 - **Eval harness** (`eval/`) — the project's first evidence mechanism. Six tell-based
   tasks (bug-hunt, ambiguous-ask, mvp-scope, migration-plan, security-review + a hard
