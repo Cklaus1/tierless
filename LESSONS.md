@@ -195,6 +195,21 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     the current cheap-model bar (they may still help a weaker model or enforce consistency, but that's
     not where the value is).
 
+21. **A skill is validated for the MODEL it was distilled against — not universally.** Tested a
+    second cheap arm ("sonnet", possibly a different family via gateway routing — can't confirm, and
+    it doesn't matter: distinct arm = data). Both validated skills had closed real Haiku gaps
+    (spec-review 8→13, constant-coupling 9→12). On sonnet, the gaps DIDN'T REPRODUCE: sonnet-bare was
+    already 12/15 on spec-review and 12/12 on code-archaeology — near ceiling, nothing for the skill
+    to close. So Haiku's specific blind spots (disguised constants, unstated design assumptions) are
+    MODEL-SPECIFIC, not universal; a different cheap model has different blind spots. Consequence for
+    the product claim: "skills close the cheap→frontier gap" is true per-(model, skill) pair, not
+    universally — the honest framing is "these skills close the SPECIFIC blind spots of the SPECIFIC
+    model you run; measure yours." The durable asset is the METHOD (gap-diff + deterministic scoring),
+    not any individual distilled skill. And the biggest untested caveat in the whole eval: we've only
+    measured STRONG cheap models (Haiku, Sonnet) that sit near ceiling — the small local 3-7B models
+    an ICP actually reaches for to cut cost (Qwen/Llama-class) aren't in this gateway, and that's
+    exactly where the gap (and skill value) would plausibly be largest and most generalizable.
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own
