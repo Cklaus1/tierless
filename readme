@@ -12,12 +12,48 @@ caliber, because the caliber lives in the process, not the weights.
 
 ## Does it actually work?
 
-We measure it — see `eval/`. The harness runs each task three ways (cheap model bare / cheap model
-+ skills / frontier model bare) and grades against objective "tells." First results
-(`eval/results/SCORES.md`) are honest and mixed: one clean win where a skill closed the gap to the
-frontier model, one case where a skill backfired, and several tasks where a modern cheap model is
-already strong enough that the skills add little. Validation is ongoing, not assumed — that
-measured-honesty is itself the differentiator in a crowded space.
+We measured it instead of asserting it (`eval/`), and the answer is specific: **discipline's
+value shows up on tasks with a horizon, not on one-shot puzzles.** That distinction is the whole
+finding.
+
+**The headline result — process over a horizon (task 07).** We had three model tiers (Haiku,
+Sonnet, Opus) each build a small multi-feature project two ways — bare, and with the `build-loop`
++ `deconstruct` skills — then blind-graded the *process* (walking skeleton first, explicit phases,
+verify-each-step, a resumable trail) by objective checks. Every model, every run, skills beat bare:
+
+| model | bare | skills | lift |
+|---|---|---|---|
+| Haiku | 0.33 | 0.71 | **+0.38** |
+| Sonnet | 0.33 | 0.96 | **+0.63** |
+| Opus | 0.42 | 1.00 | **+0.58** |
+
+The decomposition is the point. *Both* arms produced **working code** (correctness tied at 100%).
+But on **process** the bare arms scored 0.23 and the skilled arms 0.87 — and the starkest number:
+**not one bare run left a resumable trail; every skilled run did.** A bare model writes everything,
+runs it once at the end, and keeps no record of where it is. That's fine at 200 lines and fatal at
+20,000 or across a session boundary where untracked work is simply lost. The skills change the
+failure mode from *"works now, unrecoverable later"* to *"phased, verified, resumable."*
+
+**The honest negative — single-shot tasks are a ceiling.** On isolated "find the bug / review this
+code / plan this migration" tasks, a modern cheap model (Haiku) already scores 0.85–1.0 *bare*. We
+built progressively harder ones — a TOCTOU race behind a lock, a second-order injection review, a
+migration with five hidden traps, a double-entry ledger graded by an execution oracle — and bare
+Haiku aced them all (details in `eval/tasks/HARD-TASKS-CALIBRATION.md`). Making the gotcha more
+obscure just tests trivia recall, which these models have in depth. Correctness at single-artifact
+scale is a ceiling; discipline can't lift what the model already gets right.
+
+**What this means for the claim.** "Cheap + discipline ≈ frontier" holds where it matters — on the
+multi-step, long-horizon work that is most of real engineering, and exactly where cheap models
+degrade without structure. It does *not* hold as "skills make the model smarter on any single
+question," and we don't claim that.
+
+Method notes, honestly kept: grading is by objective tells and execution, never model opinion
+(`eval/rubric.md`); every hard task was headroom-checked against a bare model *before* being trusted,
+which caught several no-signal tasks before they polluted a run; and `LESSONS.md` records the
+harness bugs we hit (grader arithmetic errors, fixture corruption, a test-leak) and fixed. The full
+numbers, caveats, and next steps are in `eval/results/SCORES.md`. Validation is ongoing — the open
+frontier is whether the process win extends to *correctness* on genuinely large multi-file builds,
+which needs a bigger harness than we've built.
 
 ## Why skills over system prompt
 
