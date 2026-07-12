@@ -20,6 +20,7 @@ Each `.md` file in this directory (except this index) is a Claude Code skill —
 - **debugging** — hypothesis-driven root-cause hunting: reproduce → hypothesize → observe → fix once; bans shotgun fixes
 - **refactoring** — behavior-preserving restructuring: green → one transformation → green → commit
 - **code-archaeology** — understanding legacy/unfamiliar code before changing it: boundaries, git history, invariants, Chesterton's Fence
+- **constant-coupling** — before changing a hardcoded constant, find every DISGUISED copy of it (off-by-one shadows, scaling coefficients, coupled constants, external contracts) by consequence not spelling (gap-diff validated: Haiku 9/12→12/12; see eval/gap-diff/code-archaeology/)
 - **api-design** — contract-first endpoints and interfaces: consumer examples first, errors as part of the contract, additive evolution
 - **data-migration** — expand → migrate → contract; reversible, rehearsed, verified by counting
 - **code-migration** — framework/language/platform ports: strangler over rewrite, vertical slices behind a seam, equivalence proven, old path deleted
