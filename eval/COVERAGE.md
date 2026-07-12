@@ -44,17 +44,15 @@ verdicts but NOT for gap magnitude. The two biggest screened candidates both col
 full hand-built + eye-verified cycle. Updated prior: the remaining 7 candidates below are likely
 ceiling too.
 
-## SCREENED — remaining GAP CANDIDATES (keyword ≥2, now LIKELY inflated → probably ceiling) (7)
-| skill | keyword gap | note |
-|---|---|---|
-| database-design | +3 | candidate — likely inflated (screen over-estimates) |
-| infra-ops | +3 | candidate — likely inflated |
-| code-migration, requirements-elicitation, security-review, systems-programming, tech-doc | +2 | candidates — likely inflated (both +3/+5 candidates we tested were ceiling) |
+## FULL-CYCLE CONFIRMED CEILING — all 9 former candidates (0 remaining)
+All 9 screened gap-candidates were run through the full cycle (hand-built trap-task + checklist +
+eye-verification) and ALL confirmed CEILING — bare Haiku caught every planted trap as well as Fable:
+- version-control, compiler-building (first pair) — `eval/gap-diff/*-full/RESULT.md`
+- database-design, infra-ops, code-migration, requirements-elicitation, security-review,
+  systems-programming, tech-doc (second batch) — `eval/gap-diff/CONFIRM-7-RESULT.md`
 
-**These 9 are the todo list for the next round of full gap-diff cycles.** A keyword gap means "a real
-gap MIGHT exist here" — each needs the spec-review treatment (hand-built checklist, eye-verified,
-distill-and-retest) before any becomes a validated skill. Do NOT ship any as "validated" on the
-keyword score alone.
+**No candidates remain. No unconfirmed gaps.** The auto-screen's keyword gaps were 100% false
+positives for magnitude (0 of 9 held up). The validated real-gap set is DEFINITIVELY 3.
 
 ## NOT TASK-TESTABLE (1)
 tierless-router — pure routing/meta; no single-task probe. Its value is structural (makes the others
