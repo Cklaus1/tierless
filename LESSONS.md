@@ -155,6 +155,29 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     the fixture guard (#7): structure the environment so the bad action is impossible, not
     merely forbidden (mirrors the ai-safety skill's own rule).
 
+18. **LLM judges inflate gaps; LLM graders hallucinate scores. Every verdict must bottom out
+    in a deterministic check.** Two independent LLM-judgment failures this session, both caught
+    only by verifying against source text: (a) the spec-review blind grader hallucinated its
+    per-flaw scores (credited bare-Haiku with catching mobile/read-state it never mentioned,
+    inverting the result); (b) the skill-triage gap-judge inflated a security-review probe where
+    bare Haiku scored 6/7 into "MODERATE gap, missed two IDORs entirely" — Haiku had in fact
+    caught the authorization vuln (verified by grep AND by eye). The mechanism: an LLM prompted
+    to "find the gap between weak and strong" will manufacture one even when the attempts are
+    near-equivalent, because that's what the prompt primes. Consequence: the 32-skill triage's
+    "keep 29 / prune 3" distribution is NOT trustworthy and we did not act on it. Rule for this
+    project: no LLM-judged number ships without a deterministic backstop (keyword grep, execution
+    oracle) or a human read of the actual output. The reviews that HAVE held up (spec-review 8→13,
+    build-loop +0.63, the ledger battery) all had deterministic or execution-based scoring.
+
+19. **My hand-written eval tasks were too easy; Opus-generated "make it discriminate" tasks are
+    better fixtures.** The earlier "single-shot tasks are ceiling" finding was partly an artifact
+    of my task-writing — bare Haiku aced tasks I wrote. The triage's Opus-generated tasks (e.g. a
+    7-vuln security review with a red herring) are meaningfully harder and are worth keeping as a
+    fixture library. Reconciled picture: on EASY single-shot tasks Haiku ≈ Fable; on HARD ones
+    Haiku is still strong (6/7) but Fable has a small real edge. "Ceiling" was too strong; "small
+    gap on hard tasks" is the truer statement — but it's SMALL, not the "MODERATE everywhere" the
+    triage judge claimed.
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own
