@@ -234,6 +234,20 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     for any self-referential eval: sandbox the arms away from eval/ and LESSONS.md. General rule:
     the more the task resembles what the repo documents, the more you must isolate the arms from the repo.
 
+24. **You need the frontier model to SEE the gap, not just produce the example.** Direct test of
+    "can a cheap model do the gap-diff analysis?": gave Haiku and Sonnet the SAME two attempts Opus
+    analyzed for constant-coupling (known ground truth: 5 validated hunts). Neither recovered the
+    load-bearing discipline — recognizing that `if attempt == 2` is a disguised copy of the retry
+    count, the bug the change introduces. Both produced plausible-but-DIFFERENT distillations; Sonnet
+    *recognized* the insight in Fable's text but couldn't *derive* it as a repeatable discipline; Haiku
+    missed it entirely. Distilling the right discipline from (weak, strong) attempts is itself a
+    derive-the-non-obvious act — the class cheap models are weakest at. Consequence: the gap-diff
+    method is NOT cheaply self-serve. Frontier-in-the-loop is REQUIRED for the distillation step, not
+    just example-generation. Economics: expensive to MINT a skill (needs frontier analysis), cheap to
+    USE it (Haiku+skill applies the hunts fine). Product shape: distill centrally with a strong model,
+    ship cheap skills — but the "cheap models bootstrap themselves from examples" story is dead.
+    (Keyword scoring false-positived on the crux hunt; only eye-verification caught the miss — LESSONS #18 again.)
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own
