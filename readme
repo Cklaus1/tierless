@@ -126,6 +126,8 @@ and the most durable lesson here: no verdict ships without a deterministic backs
 per-skill results, and the harness bugs we hit and fixed are in `eval/results/SCORES.md`,
 `eval/gap-diff/`, and `LESSONS.md`.
 
+See **[ROADMAP.md](ROADMAP.md)** for where this is headed (evidence-driven: MVP validates the core against a real small model; v1 makes gap-measurement self-serve).
+
 ## Why skills over system prompt
 
 - Skills are opt-in per task, so you layer discipline where it matters (architecture, migrations,
