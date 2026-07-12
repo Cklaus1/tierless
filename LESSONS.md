@@ -178,6 +178,23 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     gap on hard tasks" is the truer statement — but it's SMALL, not the "MODERATE everywhere" the
     triage judge claimed.
 
+20. **The criterion for which skills actually help: DERIVE-the-non-obvious, not standard-checklist.**
+    Ran deterministic gap cycles (Haiku-bare vs Fable, keyword-scored, eye-verified) across ~9 skills.
+    Findings: at CEILING (gap ~0) — debugging, api-design, security-review, adversarial-review,
+    qa-testing, threat-modeling, ui-design. REAL gap — build-loop (+0.64 process), spec-review
+    (8/15→14), code-archaeology (9/12→12). The dividing line is NOT "enumeration vs single-answer"
+    (all the ceiling ones are enumeration too). It is: **does the task reward enumerating a STANDARD
+    CHECKLIST the model already has (STRIDE, common bugs, a11y items, boundary tests → ceiling), or
+    DERIVING NON-OBVIOUS items specific to this code/design (hidden legacy couplings, unstated design
+    assumptions → real gap).** A strong small model has the standard checklists memorized; what it
+    lacks is the discipline to derive the non-obvious, which is what a process skill installs. Proof:
+    on code-archaeology, bare Haiku found the 9 obvious issues but missed the 3 that require tracing
+    THIS function's specific hidden structure (the `if attempt==2` disguised-constant that IS the bug
+    the requested change would introduce) — Fable caught all 3. Implication: the library's real
+    leverage is the ~3 derive-the-non-obvious skills; the standard-checklist skills measure ~0 gap on
+    the current cheap-model bar (they may still help a weaker model or enforce consistency, but that's
+    not where the value is).
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own
