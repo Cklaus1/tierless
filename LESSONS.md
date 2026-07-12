@@ -210,6 +210,18 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     an ICP actually reaches for to cut cost (Qwen/Llama-class) aren't in this gateway, and that's
     exactly where the gap (and skill value) would plausibly be largest and most generalizable.
 
+22. **Two kinds of skill: process-scaffolding (universal) vs blind-spot (model-specific).**
+    Tested build-loop on Sonnet + a Fable reference, scored deterministically (does a resumable
+    trail file exist on disk — no LLM judge). Sonnet-bare: no trail. Sonnet+build-loop: trail
+    (build-loop.md + deconstruct plan). Crucially, **bare FABLE also left no trail** — it wrote the
+    best code of the three but kept no plan/phase record. So leaving a trail isn't a capability the
+    frontier model has; it's a BEHAVIOR no model does unprompted. This splits the library: blind-spot
+    skills (spec-review, constant-coupling) are inert on a model that already has the capability
+    (they were inert on Sonnet) — MODEL-SPECIFIC. Process-scaffolding skills (build-loop) install a
+    behavior no model does on its own at any capability level — UNIVERSAL, and their value does NOT
+    erode as the base model improves. The most durable skills are the scaffolding kind. See
+    eval/gap-diff/build-loop-cross-model.md.
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own
