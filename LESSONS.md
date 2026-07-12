@@ -128,6 +128,23 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     session boundary. Evaluate discipline where it acts — over a process, not a single answer.
     This also validates the whole pivot in #14: process/coverage tasks, not harder puzzles.
 
+16. **Correctness at single-artifact scale is a ceiling; the process win (task 07) is the
+    real, bankable result.** Chased the "does discipline ship fewer BUGS" claim with an
+    objective execution-scored oracle (task 12: build a double-entry ledger, a hidden battery
+    runs 10 adversarial checks — conservation, atomicity, durability — against the arm's code).
+    Two forms tested: 12 (invariants stated) and 12b (invariants REMOVED, so the model must
+    discover atomicity itself). Result both times: **bare Haiku scored 0.9–1.0**, atomicity
+    passing every run. A capable small model writes check-before-mutate by default, hint or no
+    hint. So: correctness of a well-scoped single-file build is ceiling — same wall as tasks
+    07-P6, 08–11. **Discipline's measurable payoff is PROCESS over a horizon (task 07: +0.63
+    process lift, every model every run), not correctness at this scale.** Real correctness
+    headroom would need genuinely large multi-file builds where "write it all, run once"
+    produces cross-module inconsistency — a much bigger eval build-out, deferred. Two durable
+    wins banked from this though: (a) the **objective acceptance-battery pattern** (execution,
+    not opinion — self-verified against a known-good and known-bad reference before trust), and
+    (b) confirmation that the eval's discriminating power lives in horizon/process tasks, so
+    that's where future task-building effort goes.
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own

@@ -46,3 +46,28 @@ too easy on correctness and needs harder invariants. Either way it's measured, n
 - Process rate = mean(P1..P6) as in task 07.
 - Watch specifically: the C3/C4 atomicity delta (bare vs skills) — that's the sharpest
   single signal of "discipline prevents a real bug."
+
+## HEADROOM CHECK RESULT (2026-07-11) — task is CEILING on correctness as written
+Bare Haiku scored **10/10** on the battery (verified by execution, self-report was accurate).
+Including every atomicity + edge check the task was built to trip. Same ceiling pattern as
+task-07's P6 and the four hard single-shot tasks.
+
+**Root cause (the useful part):** this spec HANDS the model the invariants — it literally
+says "atomicity: a failed transfer leaves everything unchanged," "integer cents only,"
+"conservation." A capable model reads the word "atomicity" and writes pre-checks. Correctness
+only becomes discriminating when the model must **discover the invariant itself** — which is
+what deconstruct ("enumerate failure paths") and verify ("adversarial self-review") force.
+
+**Decision:** do NOT run the 12-cell grid on this version — no correctness headroom. Two ways
+to make it discriminate, for a v2 of this task:
+1. **Underspecify the invariants.** State the feature ("transfer money between accounts,
+   persist to disk") but DROP the explicit atomicity/conservation/integer-cents requirements.
+   Then the bare arm that doesn't think about failure paths ships the debit-before-check bug,
+   and the disciplined arm (which enumerates failure modes) doesn't. The invariant-discovery
+   IS the test.
+2. **Raise build complexity past the one-shot horizon** — multi-file, ~8-10 operations with
+   interacting invariants (e.g. multi-hop atomic transfers, a reconciliation command, an audit
+   log that must stay consistent with balances), big enough that "write it all, run once" from
+   a bare model leaves a real inconsistency the battery catches.
+
+Kept as calibration + the reusable acceptance-battery pattern (objective, execution-scored).
