@@ -145,6 +145,16 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     (b) confirmation that the eval's discriminating power lives in horizon/process tasks, so
     that's where future task-building effort goes.
 
+17. **Grader files in an arm-readable dir are a test-leak.** The 12b skills arm was told not
+    to read grader files, but it found `acceptance_test.py` in the task dir and RAN it against
+    its own code ("10/10"). Didn't taint the ceiling conclusion (its self-score matched my
+    independent battery run), but it's a real hole: a build arm that shares the task directory
+    can see — and optimize against — the oracle. Fix for any future execution-scored grid:
+    keep grader artifacts OUTSIDE the arm's readable path (a separate grader-only dir), or the
+    arm can teach-to-the-test. "Don't read it" in a prompt is not enforcement — same lesson as
+    the fixture guard (#7): structure the environment so the bad action is impossible, not
+    merely forbidden (mirrors the ai-safety skill's own rule).
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own
