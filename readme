@@ -44,7 +44,9 @@ first, explicit phases, verify-each-step, a resumable trail — bare scored 0.23
 **not one bare run left a resumable trail; every skilled run did.** A bare model writes everything,
 runs it once, keeps no record of where it is: fine at 200 lines, fatal at 20,000 or across a session
 boundary. The skill changes the failure mode from *"works now, unrecoverable later"* to *"phased,
-verified, resumable."*
+verified, resumable."* (The process scores above were LLM-graded; the load-bearing claim — that only
+the skilled runs leave a resumable trail — was since re-confirmed *deterministically* by checking the
+filesystem, and it holds for Sonnet and even for bare Fable. See "Two kinds of skill" below.)
 
 **2. Deriving the non-obvious — validated by building the skills bottom-up.** Two skills were derived
 by *observing* the gap between a cheap and a frontier attempt on a real task, distilling only the
@@ -80,13 +82,32 @@ repeatable process, not a fluke.
 where the work spans a HORIZON. They are inert on standard checklists the model already knows, and
 on domain-reasoning the model gets wrong.** This predicts every result above.
 
+### Two kinds of skill — and which one is durable
+
+Not all validated skills are equal. Testing `build-loop` across models (Sonnet, plus a Fable
+reference) split the library cleanly:
+
+- **Blind-spot skills** (`spec-review`, `constant-coupling`) close a gap a *specific* model has.
+  They go **inert on a model that already has the capability** — the Haiku gaps didn't reproduce on
+  Sonnet, which caught those blind spots bare. Their value *shrinks as models improve*. Model-specific.
+- **Process-scaffolding skills** (`build-loop`) install a behavior **no model does on its own, at any
+  capability level.** Deterministic proof: given the same build task, bare Sonnet left no resumable
+  plan/trail — and *bare Fable, the frontier model, left none either* (it wrote the best code of the
+  three and simply kept no phase record). Only the skilled runs produced a trail. Leaving a resumable,
+  phased trail is a *behavior*, not a *capability* — so the skill's value **does not erode as the base
+  model gets stronger.** Universal.
+
+This is the most robust claim in the project: a stronger model writes better code, but it still won't
+phase the work or leave a trail you can resume across a session boundary unless a scaffolding skill
+tells it to. The durable value lives in the scaffolding skills (`eval/gap-diff/build-loop-cross-model.md`).
+
 ### Honest caveats (the ones that matter)
 
-- **Gaps are model-specific.** A skill distilled from a Haiku-vs-Fable gap is validated *for Haiku*.
-  When we tested a second cheap arm (Sonnet), the Haiku gaps didn't reproduce — Sonnet already caught
-  those blind spots bare. So the honest claim is *"these skills close the specific blind spots of the
-  specific model you run — measure yours,"* not a universal one. The durable asset is the **method**,
-  not any single skill.
+- **Blind-spot gaps are model-specific.** A blind-spot skill distilled from a Haiku-vs-Fable gap is
+  validated *for Haiku*; on Sonnet those gaps didn't reproduce. So for that class the honest claim is
+  *"these skills close the specific blind spots of the specific model you run — measure yours."*
+  (Scaffolding skills like `build-loop` are the exception — they transfer across models, per above.)
+  The durable assets are the **method** and the **scaffolding skills**, not any single blind-spot skill.
 - **We've only measured *strong* cheap models near ceiling.** The small local 3–7B models an adopter
   actually reaches for to cut cost (Qwen/Llama-class) aren't in our test gateway — and that's exactly
   where the process gap, and skill value, would plausibly be *largest*. This is the biggest untested
