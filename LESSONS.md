@@ -222,6 +222,18 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     erode as the base model improves. The most durable skills are the scaffolding kind. See
     eval/gap-diff/build-loop-cross-model.md.
 
+23. **When the eval's DOMAIN is the project itself, the project's own docs are a test leak
+    (repo-as-answer-key).** Ran a reflexive gap-diff — "design an eval" — to see if an eval-design
+    skill was worth building. Result: CEILING (Haiku 12/12 = Fable 12/12; a modern model designs a
+    rigorous eval bare — control the variable, distrust LLM judges, headroom-check, blind grading,
+    execution oracles). No skill to build. BUT the cycle was partly open-book: the arms could read
+    this repo, and bare Haiku's answer CITED our specific findings ("the first blind LLM grader
+    hallucinated", "five of six tasks in the v2 grid at 0.85-1.0"). So the 12/12 may reflect studying
+    our answer key, not independent skill. Doesn't change the ceiling verdict, but it's a real
+    contamination class — the same as #17 (grader files in the arm-readable path) one level up. Fix
+    for any self-referential eval: sandbox the arms away from eval/ and LESSONS.md. General rule:
+    the more the task resembles what the repo documents, the more you must isolate the arms from the repo.
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own
