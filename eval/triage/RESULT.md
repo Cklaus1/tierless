@@ -53,8 +53,28 @@ skills properly, each needs the FULL validated cycle spec-review got: an objecti
 scorer (keyword/execution), not an LLM judge. That is real work — ~1 cycle per skill — and it is
 the only method that has actually held up under scrutiny this session.
 
+## Follow-up: full deterministic cycles on the two "LARGE gap" skills (2026-07-12)
+The screening flagged `debugging` and `api-design` as LARGE PROCESS gaps — its strongest keep
+candidates. Ran the full cycle on both (hand-written tasks with embedded objective checklists,
+scored by keyword grep + eye verification, no LLM judge):
+
+- **debugging**: Haiku 4/5, Fable 5/5 — and the "4" undercounts: bare Haiku reached the exact
+  discriminating insight (traceback is from a STALE DEPLOYED version; rolling deploy; the fix is
+  already on main so current source can't repro). Verified by eye. The one keyword miss was regex
+  phrasing, not a real miss. **True gap ≈ 0.**
+- **api-design**: Haiku 8/8, Fable 8/8 — dead tie. Both covered idempotency, integer-minor-units
+  money, coded error taxonomy, pagination, async state machine, versioning, ownership authz,
+  amount validation. **True gap = 0.**
+
+Both "LARGE gap" skills are at CEILING under deterministic scoring. That's THREE-for-three
+(security-review, debugging, api-design): every skill checked deterministically shows the triage
+judge inflated a ~0 gap into MODERATE/LARGE. **The screening triage is directionally broken toward
+inflation; its verdicts are unusable.**
+
 ## Recommendation
-1. Do NOT act on the screening verdicts (no pruning, no "keep 29").
+1. Do NOT act on the screening verdicts (no pruning, no "keep 29"). And note the inverse:
+   the judge's inflation means we ALSO can't trust it to have correctly kept anything — a "keep"
+   from a judge that says "keep" to everything carries no information.
 2. The reusable asset from this pass: the 32 Opus-generated discriminating tasks are good, hard
    fixtures — better than the hand-written ones. Keep them.
 3. To actually triage: run the full deterministic gap-diff cycle (like spec-review) on the
