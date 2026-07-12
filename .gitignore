@@ -7,7 +7,7 @@ __pycache__/
 # Robust approach: ignore ALL loose .md directly in a task dir, then un-ignore the
 # exactly-4 known harness files. Arm deliverables (scope.md, plan.md, whatever they
 # name it) are caught generically; harness inputs are explicitly kept.
-eval/**/.claude/
+**/.claude/
 eval/tasks/*/results/
 eval/tasks/*/*.md
 !eval/tasks/*/task.md
