@@ -115,6 +115,19 @@ the next person (or agent) who works on it — and updated as evidence accumulat
     The next eval investment is task-07 (build-loop, process-scored) and coverage-graded
     tasks, NOT more single-shot bug hunts.
 
+15. **The thesis is real — but only where there's a horizon (task 07 / build-loop).** After
+    four single-shot tasks showed no discrimination, the build-loop paired eval (a multi-
+    feature build, process-scored) gave the first clean signal: **every model, every run,
+    skills > bare.** Overall process-rate lift: haiku +0.375, sonnet +0.625, opus +0.583,
+    off a bare baseline of 0.33–0.42 (real headroom, no ceiling confound). The decomposition
+    is the point: **both arms produce working code (P6=1.00 for all), but on PROCESS (P1–P5)
+    bare=0.23 vs skills=0.87.** Not one bare run left a resumable trail (P4=0.00); the skills
+    arms wrote a phased plan with exit criteria every time. Lesson: **discipline's value is
+    invisible on tasks with no horizon and decisive on tasks with one.** A bare model's
+    "write everything, run once at the end" is fine at 200 lines, fatal at 20,000 or across a
+    session boundary. Evaluate discipline where it acts — over a process, not a single answer.
+    This also validates the whole pivot in #14: process/coverage tasks, not harder puzzles.
+
 ## About the build process (meta)
 
 10. **Dogfooding surfaced the gaps faster than review did.** Applying the project's own

@@ -1,5 +1,73 @@
 # Scores Roll-Up
 
+## v3 — task 07 build-loop, process-scored (2026-07-11) ⭐ THE HEADLINE RESULT
+
+The single-shot grid (v2 below) couldn't discriminate — a strong small model one-shots
+bug hunts and reviews. Task 07 is different: a multi-feature BUILD, scored on PROCESS
+(P1–P6), where discipline shapes something a single response can't fake. 3 models × 2
+states (bare / build-loop+deconstruct skills) × 2 runs = 12 isolated builds, blind
+process-graded. Deterministic rate from verdicts.
+
+### Overall process-rate (mean of P1–P6) per (model, state)
+
+| model | bare | skills | lift |
+|---|---|---|---|
+| haiku | 0.333 | 0.708 | **+0.375** |
+| sonnet | 0.333 | 0.958 | **+0.625** |
+| opus | 0.417 | 1.000 | **+0.583** |
+
+**Every model, every run, skills > bare. This is the first clean, unambiguous signal that
+the discipline works.** Unlike v2, there is no near-ceiling confound: bare models sit at
+0.33–0.42, so there is real headroom and the skill fills it.
+
+### Per process-tell — fraction HIT, bare vs skills (pooled across models & runs)
+
+| tell | bare | skills | delta |
+|---|---|---|---|
+| P1 walking skeleton first | 0.00 | 0.75 | **+0.75** |
+| P2 explicit phases | 0.17 | 0.92 | **+0.75** |
+| P3 verify per phase | 0.00 | 0.83 | **+0.83** |
+| P4 resumable trail | 0.00 | 0.83 | **+0.83** |
+| P5 demonstrable end state | 1.00 | 1.00 | +0.00 |
+| P6 code actually works | 1.00 | 1.00 | +0.00 |
+
+### The key decomposition: process vs. outcome
+
+| dimension | bare | skills | lift |
+|---|---|---|---|
+| **process** (P1–P5) | 0.23 | 0.87 | **+0.63** |
+| **outcome** (P6 code works) | 1.00 | 1.00 | +0.00 |
+
+**This is the sharpest finding of the whole eval.** Both bare and skills arms produce
+*working code* (P6 = 1.00 for everyone — the expense tracker is easy enough that any modern
+model gets it right). But on *process* — walking skeleton first, phasing, verifying each
+step, leaving a resumable trail — bare models score 0.23 and the skills arms score 0.87.
+
+The bare model's universal pattern (quoting graders): *"I built three files in this order…"*
+then one verification block at the end. No phases, no incremental verification, **no trail
+that survives a session boundary** (P4 = 0.00 bare — not a single bare run left a plan/state
+file). The skills arms wrote `.claude/plans/build-loop.md` with phase goals, exit criteria,
+and a completed exit record.
+
+### Why this matters more than the code-works tie
+
+On a toy expense tracker, "process" looks like overhead — the code works either way. But
+process is the ONLY thing that scales to real projects: a bare model that writes everything
+then runs it once is fine at 200 lines and catastrophic at 20,000, or across a session
+boundary where the untracked work is simply lost. **The build-loop skill changes the failure
+mode from "works now, unrecoverable later" to "phased, verified, resumable" — exactly its
+claim.** The single-shot tasks couldn't see this because they have no horizon; task 07 does.
+
+### Caveats (honest)
+- N=2 per cell; one haiku-skills run scored 0.42 (the skill's trail didn't fully take that
+  run — real variance, shown not hidden). Sonnet/opus skills were rock-solid (0.92–1.00).
+- The task is easy on P6 by design (isolates process from correctness). A harder build would
+  test whether the process lift also protects *correctness* at scale — the natural next task.
+- Process tells are somewhat correlated (a phased build tends to hit P1–P4 together), so
+  +0.63 is one effect seen four ways, not four independent wins. Still a large, real effect.
+
+---
+
 ## v2 — the model × skills grid (2026-07-11)
 
 3 models (haiku/sonnet/opus) × 2 states (bare/skills) × 6 tasks × 3 runs = 108 cells,
