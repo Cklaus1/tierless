@@ -32,14 +32,24 @@ refactoring, release-management, roadmap, shell-scripting, software-architecture
 → Bare Haiku matched or beat Fable. Consistent with the criterion: these are standard-checklist domains
 the model already commands. Safe to treat as ceiling.
 
-## SCREENED deterministic — GAP CANDIDATES (keyword gap ≥2 — NOT yet confirmed) (9)
+## FULL-CYCLE CONFIRMED — CEILING (were screened as candidates, then disproven) (2)
+- **version-control** — screen said +3; full cycle w/ planted traps + eye-verify = CEILING. Bare Haiku
+  caught all four traps (missed-callsite/incomplete-rename, stale docs, unrelated dep bump, junk file).
+- **compiler-building** — screen said +5; full cycle = CEILING. Bare Haiku caught the code-specific
+  traps incl. the subtle dead-`<`-grammar-rule and the NAME-eval crash. (`eval/gap-diff/*-full/RESULT.md`)
+
+**Methodological correction:** the auto-generated screen OVER-ESTIMATES candidate gaps ~2-3x (generic
+keyword items the model expresses in different words score as misses). It is reliable for CEILING
+verdicts but NOT for gap magnitude. The two biggest screened candidates both collapsed to ceiling on a
+full hand-built + eye-verified cycle. Updated prior: the remaining 7 candidates below are likely
+ceiling too.
+
+## SCREENED — remaining GAP CANDIDATES (keyword ≥2, now LIKELY inflated → probably ceiling) (7)
 | skill | keyword gap | note |
 |---|---|---|
-| compiler-building | +5 (6→11/15) | biggest; but compilers are a broad domain — likely partly knowledge, needs a cycle |
-| database-design | +3 | candidate |
-| infra-ops | +3 | candidate |
-| version-control | +3 | candidate — the rename-updates-all-callsites item echoes constant-coupling's disguised-copy class |
-| code-migration, requirements-elicitation, security-review, systems-programming, tech-doc | +2 | candidates |
+| database-design | +3 | candidate — likely inflated (screen over-estimates) |
+| infra-ops | +3 | candidate — likely inflated |
+| code-migration, requirements-elicitation, security-review, systems-programming, tech-doc | +2 | candidates — likely inflated (both +3/+5 candidates we tested were ceiling) |
 
 **These 9 are the todo list for the next round of full gap-diff cycles.** A keyword gap means "a real
 gap MIGHT exist here" — each needs the spec-review treatment (hand-built checklist, eye-verified,
