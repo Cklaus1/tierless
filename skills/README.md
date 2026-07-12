@@ -27,6 +27,7 @@ Each `.md` file in this directory (except this index) is a Claude Code skill —
 - **dependency-management** — supply chain: vet before adopting, pin by lockfile, scheduled upgrade cadence, exit plan per dependency
 - **incident-response** — production-down discipline: mitigate first (revert!), diagnose second, fix third
 - **tech-doc** — design docs and RFCs: problem before solution, steelmanned alternatives, numbers not adjectives
+- **spec-review** — reviewing a design doc: audit what it ASSUMES not what it says — dependency-failure, dual-write ordering, correlated events, goal×population×state, quantify-the-claims (empirically derived via gap-diff; see eval/gap-diff/)
 - **naming** — identifier and file-naming conventions; run before merge
 - **version-control** — atomic commits with why-messages, branch hygiene, history as a debugging tool; checked during verify
 
