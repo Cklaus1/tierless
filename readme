@@ -12,14 +12,21 @@ caliber, because the caliber lives in the process, not the weights.
 
 ## Does it actually work?
 
-We measured it instead of asserting it (`eval/`), and the answer is specific: **discipline's
-value shows up on tasks with a horizon, not on one-shot puzzles.** That distinction is the whole
-finding.
+We measured it instead of asserting it (`eval/`), against a hard bar — the frontier model **Fable**
+(with Opus and Sonnet as intermediate tiers, Haiku as the cheap model). Every number below is scored
+**deterministically** (keyword grep or an execution oracle) and eye-verified — never by an LLM's
+opinion, because every LLM judge we tried lied to us (see *Method*). The answer is specific and it
+has a clean boundary.
 
-**The headline result — process over a horizon (task 07).** We had three model tiers (Haiku,
-Sonnet, Opus) each build a small multi-feature project two ways — bare, and with the `build-loop`
-+ `deconstruct` skills — then blind-graded the *process* (walking skeleton first, explicit phases,
-verify-each-step, a resumable trail) by objective checks. Every model, every run, skills beat bare:
+**The one-line finding:** discipline skills close a real cheap→frontier gap on **process over a
+horizon** and on **deriving the non-obvious** — and are inert everywhere else (standard-checklist
+tasks the model already aces, and domain-reasoning gaps a process can't teach).
+
+### Where skills measurably work (validated)
+
+**1. Process over a horizon — the headline.** Three model tiers each built a small multi-feature
+project two ways (bare vs. `build-loop` + `deconstruct`), blind-scored on *process* by objective
+checks. Every model, every run, skills beat bare:
 
 | model | bare | skills | lift |
 |---|---|---|---|
@@ -27,33 +34,71 @@ verify-each-step, a resumable trail) by objective checks. Every model, every run
 | Sonnet | 0.33 | 0.96 | **+0.63** |
 | Opus | 0.42 | 1.00 | **+0.58** |
 
-The decomposition is the point. *Both* arms produced **working code** (correctness tied at 100%).
-But on **process** the bare arms scored 0.23 and the skilled arms 0.87 — and the starkest number:
+*Both* arms produced working code (correctness tied at 100%). But on process — walking skeleton
+first, explicit phases, verify-each-step, a resumable trail — bare scored 0.23 and skilled 0.87, and
 **not one bare run left a resumable trail; every skilled run did.** A bare model writes everything,
-runs it once at the end, and keeps no record of where it is. That's fine at 200 lines and fatal at
-20,000 or across a session boundary where untracked work is simply lost. The skills change the
-failure mode from *"works now, unrecoverable later"* to *"phased, verified, resumable."*
+runs it once, keeps no record of where it is: fine at 200 lines, fatal at 20,000 or across a session
+boundary. The skill changes the failure mode from *"works now, unrecoverable later"* to *"phased,
+verified, resumable."*
 
-**The honest negative — single-shot tasks are a ceiling.** On isolated "find the bug / review this
-code / plan this migration" tasks, a modern cheap model (Haiku) already scores 0.85–1.0 *bare*. We
-built progressively harder ones — a TOCTOU race behind a lock, a second-order injection review, a
-migration with five hidden traps, a double-entry ledger graded by an execution oracle — and bare
-Haiku aced them all (details in `eval/tasks/HARD-TASKS-CALIBRATION.md`). Making the gotcha more
-obscure just tests trivia recall, which these models have in depth. Correctness at single-artifact
-scale is a ceiling; discipline can't lift what the model already gets right.
+**2. Deriving the non-obvious — validated by building the skills bottom-up.** Two skills were derived
+by *observing* the gap between a cheap and a frontier attempt on a real task, distilling only the
+repeatable process, then re-testing — and each closed the gap deterministically:
 
-**What this means for the claim.** "Cheap + discipline ≈ frontier" holds where it matters — on the
-multi-step, long-horizon work that is most of real engineering, and exactly where cheap models
-degrade without structure. It does *not* hold as "skills make the model smarter on any single
-question," and we don't claim that.
+| skill | cheap-model bare | + skill | frontier |
+|---|---|---|---|
+| `spec-review` (find every flaw in a design doc) | 8/15 | **13/15** | 15/15 |
+| `constant-coupling` (find every disguised copy of a hardcoded constant before changing it) | 9/12 | **12/12** | 12/12 |
 
-Method notes, honestly kept: grading is by objective tells and execution, never model opinion
-(`eval/rubric.md`); every hard task was headroom-checked against a bare model *before* being trusted,
-which caught several no-signal tasks before they polluted a run; and `LESSONS.md` records the
-harness bugs we hit (grader arithmetic errors, fixture corruption, a test-leak) and fixed. The full
-numbers, caveats, and next steps are in `eval/results/SCORES.md`. Validation is ongoing — the open
-frontier is whether the process win extends to *correctness* on genuinely large multi-file builds,
-which needs a bigger harness than we've built.
+`constant-coupling`'s sharpest catch: an `if attempt == 2` that is a disguised copy of a retry count
+— *the actual bug the requested change would introduce* — which the bare model missed entirely and
+the skilled model caught. Two independent successes make the derivation method (`eval/gap-diff/`) a
+repeatable process, not a fluke.
+
+### Where skills do NOT help (measured, not assumed)
+
+- **Standard-checklist tasks are at ceiling.** On isolated find-the-bug / review-this / plan-this
+  tasks, a modern cheap model already scores ~1.0 *bare*: debugging, api-design, security-review,
+  adversarial-review, qa-testing, threat-modeling, ui-design all tied cheap-vs-frontier. The model
+  has these checklists (STRIDE, common bugs, a11y, boundary tests) memorized; a skill listing them
+  adds nothing. Harder, more obscure versions just test trivia recall, which these models have in
+  depth (`eval/tasks/HARD-TASKS-CALIBRATION.md`).
+- **Domain-reasoning gaps resist distillation.** A hard *coding* task (a recurring-schedule expander
+  with a subtle monthly-overflow rule) did open a real code-correctness gap — cheap models 9/10,
+  frontier 10/10 — but the process skill did *not* close it: the skilled model enumerated the edge
+  case and *still* implemented the calendar math wrong. You can't teach "get the computation right"
+  as a discipline. That's capability, not process (`eval/gap-diff/coding-itself/`).
+
+### The criterion (the transferable finding)
+
+**Skills help where the items must be DERIVED (non-obvious, specific to this code/design) and
+where the work spans a HORIZON. They are inert on standard checklists the model already knows, and
+on domain-reasoning the model gets wrong.** This predicts every result above.
+
+### Honest caveats (the ones that matter)
+
+- **Gaps are model-specific.** A skill distilled from a Haiku-vs-Fable gap is validated *for Haiku*.
+  When we tested a second cheap arm (Sonnet), the Haiku gaps didn't reproduce — Sonnet already caught
+  those blind spots bare. So the honest claim is *"these skills close the specific blind spots of the
+  specific model you run — measure yours,"* not a universal one. The durable asset is the **method**,
+  not any single skill.
+- **We've only measured *strong* cheap models near ceiling.** The small local 3–7B models an adopter
+  actually reaches for to cut cost (Qwen/Llama-class) aren't in our test gateway — and that's exactly
+  where the process gap, and skill value, would plausibly be *largest*. This is the biggest untested
+  question in the whole eval.
+- **N is small** (1–3 per cell) — these results are directional and deterministic, not a
+  publication-grade study.
+
+### Method (why you can trust the numbers)
+
+All grading is deterministic — keyword checklists or execution oracles — and every non-zero gap was
+eye-verified against the actual output. This is not fastidiousness: **every LLM-as-judge we used
+produced false results** — one blind grader hallucinated its scores, one gap-judge systematically
+*inflated* gaps (rating three skills as large gaps that deterministic scoring showed were at
+ceiling). We caught each by checking the judge's claims against the source text. The standing rule,
+and the most durable lesson here: no verdict ships without a deterministic backstop. Full numbers,
+per-skill results, and the harness bugs we hit and fixed are in `eval/results/SCORES.md`,
+`eval/gap-diff/`, and `LESSONS.md`.
 
 ## Why skills over system prompt
 
